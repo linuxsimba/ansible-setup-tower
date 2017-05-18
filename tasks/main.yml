@@ -1,0 +1,69 @@
+---
+# tasks file for ansible-setup-tower
+
+- name: download latest tower
+  unarchive:
+    src: "{{tower_install_url }}"
+    dest: "{{ ansible_user_dir }}"
+    remote_src: yes
+    creates: "{{ tower_dir }}/setup.sh"
+
+- block:
+
+  - name: copy sam doran postgresql replication role into the tower role directory
+    unarchive:
+      src: https://github.com/samdoran/ansible-role-postgresql-replication/tarball/master
+      dest: "{{ tower_dir }}/roles/"
+      remote_src: yes
+      list_files: yes
+    register: postgres_replication_archive
+
+  - name: create roles/postgresql-replication symlink to the downloaded role
+    file:
+      src: "{{ tower_dir}}/roles/{{ postgres_replication_archive.files[0] }}"
+      dest: "{{ tower_dir}}/roles/postgres-replication"
+      state: link
+
+  - name: copy postgresql-replication playbook to the tower setup root dir
+    copy:
+       src: "{{ tower_dir }}/roles/{{ postgres_replication_archive.files[0] }}/tests/ansible-tower/psql-replication.yml
+       dest: "{{ tower_dir }}/files/psql-replication.yml"
+       remote_src: true
+
+  when: postgres_streaming_replication == True
+
+
+- name: get status of the group_vars/all path
+  stat: path="{{ tower_dir }}/group_vars/all"
+  register: st
+
+- name: update inventory file, remove all the variables in inventory
+  copy:
+    src: inventory
+    dest: "{{ tower_dir }}/inventory"
+
+- block:
+    - name: fetch group_vars/all file from the tower install since it exists
+      fetch:
+        src: "{{ tower_dir }}/group_vars/all"
+        flat: yes
+        dest: orig_group_var_all.txt
+
+    - name: delete group_vars/all
+      file: path="{{tower_dir}}/group_vars/all" state=absent
+
+    - name: create group_vars/all as a directory
+      file: path="{{tower_dir}}/group_vars/all" state=directory
+
+  when: st.stat.isdir == False
+
+- name: copy unecrypted group_var/all variables back to the tower setup node
+  copy:
+    src: all_group_var.txt
+    dest: "{{ tower_dir}}/group_vars/all/vars"
+
+- name: update inventory variables for the "all" group
+  blockinfile:
+    dest: "{{ tower_dir}}/group_vars/all/vars"
+    block: |
+      {{ lookup('template', 'templates/setup_unencrypted_variables') }}
