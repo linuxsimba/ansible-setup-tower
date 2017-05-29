@@ -38,8 +38,8 @@
   register: st
 
 - name: update inventory file, remove all the variables in inventory
-  copy:
-    src: inventory
+  template:
+    src: inventory.j2
     dest: "{{ tower_dir }}/inventory"
 
 - block:
@@ -57,7 +57,7 @@
 
   when: st.stat.isdir == False
 
-- name: copy unecrypted group_var/all variables back to the tower setup node
+- name: copy unencrypted group_var/all variables back to the tower setup node
   copy:
     src: all_group_var.txt
     dest: "{{ tower_dir}}/group_vars/all/vars"

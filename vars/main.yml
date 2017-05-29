@@ -1,5 +1,4 @@
 ---
 # vars file for ansible-setup-tower
 #
-setup_bundle_str: 'setup'
 tower_dir: "{{ ansible_user_dir }}/ansible-tower-setup-{{ ansible_tower_version }}"

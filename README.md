@@ -17,20 +17,21 @@ Requirements
 Role Variables
 --------------
 
-* ansible_tower_version: Defaults to ``latest``. Change it to a tower version if
+* ``ansible_tower_version``: Defaults to ``latest``. Change it to a tower version if
   needed for example ``3.1.3``.
 
-* base_url_ansible_tower: base uri for location of the ansible tower code.
-  Default is ``http://releases.ansible.com/ansible-tower-setup``.
-
-* tower_install_url: Defaults to install the latest Tower install playbook (_no
+* ``tower_install_url``: Defaults to install the latest Tower install playbook (_no
   bundle_). Change this variable if you wish to download a Setup bundle. For
 example: ``http://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-setup-bundle-latest.el7.tar.gz ``
 
-* postgres_streaming_replication: Defaults to ``true``. If set to true assumes
+* ``postgres_streaming_replication``: Defaults to ``true``. If set to true assumes
   you want to this role to create a pair of postgres database servers with
   streaming replication enabled
 
+* ``tower_servers``: List of DNS names of Ansible Tower servers
+
+* ``postgres_server``: List of DNS names of Postgres servers. List only **2**
+  servers. The first server is the master server. The 2nd server is a slave server.
 
 
 Dependencies
