@@ -1,6 +1,22 @@
 ---
 # tasks file for ansible-setup-tower
 
+- assert:
+    that: "ansible_tower_version is defined"
+    msg: "Define the ansible_tower_version variable"
+
+- assert:
+    that: "tower_servers is defined"
+    msg: "Define tower_servers variable with list of tower servers"
+
+- assert:
+    that: "postgres_servers is defined"
+    msg: "Define postgres_server variable with list of postgres servers"
+
+- assert:
+    that: "postgres_servers|length < 3"
+    msg: "Only 2 postgres_servers can be defined"
+
 - name: download latest tower
   unarchive:
     src: "{{tower_install_url }}"
