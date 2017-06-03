@@ -26,8 +26,8 @@
 
   - name: copy postgresql-replication playbook to the tower setup root dir
     copy:
-       src: "{{ tower_dir }}/roles/{{ postgres_replication_archive.files[0] }}/tests/ansible-tower/psql-replication.yml"
-       dest: "{{ tower_dir }}/files/psql-replication.yml"
+       src: "{{ tower_dir }}/roles/{{ postgres_replication_archive.files[0] }}/tests/ansible-tower/files/psql-replication.yml"
+       dest: "{{ tower_dir }}/psql-replication.yml"
        remote_src: true
 
   when: postgres_streaming_replication == True
