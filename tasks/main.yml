@@ -8,6 +8,7 @@
     remote_src: yes
     creates: "{{ tower_dir }}/setup.sh"
 
+
 - block:
 
   - name: copy sam doran postgresql replication role into the tower role directory
@@ -55,15 +56,15 @@
     - name: create group_vars/all as a directory
       file: path="{{tower_dir}}/group_vars/all" state=directory
 
-  when: st.stat.isdir == False
+    - name: copy original group_vars/all to group_vars/all/vars
+      copy:
+        src: orig_group_var_all.txt
+        dest: "{{ tower_dir }}/group_vars/all/vars"
 
-- name: copy unencrypted group_var/all variables back to the tower setup node
-  copy:
-    src: all_group_var.txt
-    dest: "{{ tower_dir}}/group_vars/all/vars"
+  when: st.stat.isdir == False
 
 - name: update inventory variables for the "all" group
   blockinfile:
     dest: "{{ tower_dir}}/group_vars/all/vars"
     block: |
-      {{ lookup('template', 'templates/setup_unencrypted_variables') }}
+      {{ lookup('template', 'templates/unencrypted_setup_vars.j2') }}
