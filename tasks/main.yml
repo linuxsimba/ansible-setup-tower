@@ -79,12 +79,17 @@
     - name: copy original group_vars/all to group_vars/all/vars
       copy:
         src: orig_group_var_all.txt
-        dest: "{{ tower_dir }}/group_vars/all/vars"
+        dest: "{{ tower_dir }}/group_vars/all/vars.yml"
+
+    - name: copy default vault file (unencrypted)..encrypte using ansible-vault
+      copy:
+        src: vault_sample.yml
+        dest: "{{ tower_dir }}/group_vars/all/vault.yml"
 
   when: st.stat.isdir == False
 
 - name: update inventory variables for the "all" group
   blockinfile:
-    dest: "{{ tower_dir}}/group_vars/all/vars"
+    dest: "{{ tower_dir}}/group_vars/all/vars.yml"
     block: |
       {{ lookup('template', 'templates/unencrypted_setup_vars.j2') }}
