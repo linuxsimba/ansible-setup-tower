@@ -30,8 +30,7 @@ example: ``http://releases.ansible.com/ansible-tower/setup-bundle/ansible-tower-
 
 * ``postgres_streaming_replication``: Defaults to ``false``. If set to true assumes
   you want to this role to create a pair of postgres database servers with
-  streaming replication enabled
-
+  streaming replication enabled. If using this role on a AWS setup, leave it as False as AWS RDS provides its own HA.
 
 
 Dependencies
