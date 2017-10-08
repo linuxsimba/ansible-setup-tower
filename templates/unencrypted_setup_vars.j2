@@ -1,7 +1,7 @@
 {% raw %}
 admin_password: "{{ vault_admin_password }}"
 
-pg_host: "{{ postgres_server[0] }}"
+pg_host: "{{ groups['database'][0] }}"
 pg_port: '5432'
 
 {% endraw %}
