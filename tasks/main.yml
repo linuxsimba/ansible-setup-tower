@@ -102,7 +102,7 @@
         src: vault_sample.yml
         dest: "{{ tower_dir }}/group_vars/all/vault.yml"
 
-  when: st.stat.isdir == False
+  when: st.stat.isdir == False or st.stat.isdir == False
 
 - name: update inventory variables for the "all" group
   blockinfile:

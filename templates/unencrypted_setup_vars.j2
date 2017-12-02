@@ -21,10 +21,11 @@ pg_password: "{{ vault_pg_password }}"
 
 rabbitmq_port: '5672'
 rabbitmq_vhost: "{{ vault_rabbitmq_vhost}}"
-rabbitmq_username: "{{ vault_rabbitmq_password }}"
+rabbitmq_username: "{{ vault_rabbitmq_username }}"
+rabbitmq_password: "{{ vault_rabbitmq_password }}"
 rabbitmq_cookie: "{{ vault_rabbitmq_cookie }}"
 
-rabbit_user_long_name: false
+rabbitmq_user_long_name: false
 
 {% endraw %}
 
