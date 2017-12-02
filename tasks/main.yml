@@ -1,6 +1,22 @@
 ---
 # tasks file for ansible-setup-tower
 
+- set_fact:
+    bundle_var: "-bundle"
+  when: use_bundle == True
+
+- set_fact:
+    base_url_ansible_tower: "http://releases.ansible.com/ansible-tower/setup{{bundle_var}}/ansible-tower-setup{{bundle_var}}"
+
+- set_fact:
+    tower_install_url: "{{ base_url_ansible_tower}}-{{ansible_tower_version}}.tar.gz"
+
+- set_fact:
+    tower_dir: "{{ ansible_user_dir }}/ansible-tower-setup{{bundle_var}}-{{ ansible_tower_version }}"
+
+- set_fact:
+    tower_install_url: "{{ base_url_ansible_tower}}-{{ansible_tower_version}}.tar.gz"
+
 - assert:
     that: "ansible_tower_version is defined"
     msg: "Define the ansible_tower_version variable"
