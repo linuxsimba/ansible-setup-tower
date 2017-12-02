@@ -15,10 +15,10 @@
 
 - assert:
     that: "postgres_servers|length < 3"
-    msg: "Only 2 postgres_servers can be defined"
+    msg: "More than 3 postgres servers it not allowed"
 
 - assert:
-    that: "postgres_streaming_replication == False and postgres_servers|length == 1"
+    that: "postgres_streaming_replication == True and postgres_servers|length == 2"
     msg: "Postgres streaming replication requires 2 Postgres servers"
 
 - name: download latest tower
