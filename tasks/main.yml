@@ -49,7 +49,7 @@
 
   - name: copy sam doran postgresql replication role into the tower role directory
     unarchive:
-      src: https://github.com/samdoran/ansible-role-postgresql-replication/tarball/master
+      src: "{{ postgres-replication-git-repo }}" 
       dest: "{{ tower_dir }}/roles/"
       remote_src: yes
       list_files: yes
@@ -102,7 +102,7 @@
         src: orig_group_var_all.txt
         dest: "{{ tower_dir }}/group_vars/all/vars.yml"
 
-    - name: copy default vault file (unencrypted)..encrypte using ansible-vault
+    - name: copy default vault file (unencrypted)..encrypt using ansible-vault
       copy:
         src: vault_sample.yml
         dest: "{{ tower_dir }}/group_vars/all/vault.yml"
