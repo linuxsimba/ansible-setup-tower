@@ -49,7 +49,7 @@
 
   - name: copy sam doran postgresql replication role into the tower role directory
     unarchive:
-      src: "{{ postgres-replication-git-repo }}" 
+      src: "{{ postgres_replication_repo }}" 
       dest: "{{ tower_dir }}/roles/"
       remote_src: yes
       list_files: yes
