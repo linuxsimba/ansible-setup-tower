@@ -1,4 +1,2 @@
 ---
 # vars file for ansible-setup-tower
-#
-bundle_var: '-bundle'
