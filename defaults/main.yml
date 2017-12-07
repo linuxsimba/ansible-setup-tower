@@ -2,6 +2,5 @@
 # defaults file for ansible-setup-tower
 # Set this to true if using the Ansible tower bundle
 use_bundle: false
-bundle_var: ''
 postgres_streaming_replication: false
 
